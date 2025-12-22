@@ -39,7 +39,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         registry-url: 'https://registry.npmjs.org'
@@ -56,14 +56,18 @@ jobs:
       run: npm test
 
   release:
-    name: Release main packages
+    name: Release
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.release == 'yes' }}
     needs: build
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
-    
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '24'
+        registry-url: 'https://registry.npmjs.org'
+
     - name: Install Dependencies
       shell: bash
       run: npm install
