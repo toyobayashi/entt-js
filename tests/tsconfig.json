@@ -1,0 +1,12 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    // Tests import some symbols as values even when they're only used as
+    // types. Disable the `noUnusedLocals` check for test builds so the
+    // typechecker focuses on real type errors rather than this stylistic
+    // import issue. This only affects tests and keeps runtime code untouched.
+    "noUnusedLocals": false,
+    "rootDir": ".."
+  },
+  "include": ["./**/*.ts", "../src"]
+}

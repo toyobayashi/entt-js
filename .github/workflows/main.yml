@@ -1,0 +1,100 @@
+name: Build
+
+on:
+  push:
+    paths-ignore:
+    - '**/*.md'
+    - '**/docs/**'
+    branches:
+    - main
+    - test-*
+  pull_request:
+    paths-ignore:
+    - '**/*.md'
+    - '**/docs/**'
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release main packages'
+        required: true
+        default: 'no'
+        type: choice
+        options:
+        - 'no'
+        - 'yes'
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  build:
+    timeout-minutes: 15
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [24.x]
+
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install Dependencies
+      shell: bash
+      run: npm install
+
+    - name: Build
+      shell: bash
+      run: npm run build
+
+    - name: Test
+      run: npm test
+
+  release:
+    name: Release main packages
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.release == 'yes' }}
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Update npm
+      run: npm install -g npm@latest
+    - name: Install Dependencies
+      shell: bash
+      run: npm install
+
+    - name: Build
+      shell: bash
+      run: npm run build
+
+    - name: Publish
+      run: npm publish
+    
+    - name: Get version
+      id: pkg
+      run: |
+        version=$(node -p "require('./package.json').version")
+        echo "version=$version" >> $GITHUB_OUTPUT
+
+    - name: Create tag
+      run: |
+        git tag v${{ steps.pkg.outputs.version }}
+        git push origin v${{ steps.pkg.outputs.version }}
+
+    - name: Create release
+      uses: softprops/action-gh-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ steps.pkg.outputs.version }}
+        name: v${{ steps.pkg.outputs.version }}
+        draft: true
+        prerelease: false
+        generate_release_notes: true

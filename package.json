@@ -1,0 +1,84 @@
+{
+  "name": "entt-js",
+  "version": "0.1.0",
+  "description": "TypeScript port of EnTT - a fast and reliable entity-component-system (ECS) implementation.",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/toyobayashi/entt-js#readme",
+  "bugs": {
+    "url": "https://github.com/toyobayashi/entt-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/toyobayashi/entt-js.git"
+  },
+  "keywords": [
+    "entt",
+    "entity",
+    "ecs",
+    "entity-component-system",
+    "game"
+  ],
+  "author": "toyobayashi",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/entt.js",
+  "module": "./dist/entt.js",
+  "types": "./dist/entt.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/entt.d.ts",
+      "node": {
+        "production": "./dist/entt.min.js",
+        "default": "./dist/entt.js"
+      },
+      "default": "./dist/entt.js"
+    },
+    "./browser": {
+      "types": "./dist/entt.d.ts",
+      "production": "./dist/browser/index.min.js",
+      "default": "./dist/browser/index.js"
+    },
+    "./entt.js": "./dist/entt.js",
+    "./entt.min.js": {
+      "types": "./dist/entt.d.ts",
+      "default": "./dist/entt.min.js"
+    },
+    "./browser/index.js": {
+      "types": "./dist/entt.d.ts",
+      "default": "./dist/browser/index.js"
+    },
+    "./browser/index.min.js": {
+      "types": "./dist/entt.d.ts",
+      "default": "./dist/browser/index.min.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "build": "tsdown && tsc -p tsconfig.json && rollup -c rollup.config.js",
+    "dev": "tsdown --watch",
+    "test": "vitest --run",
+    "benchmark": "node ./tests/benchmark/main.ts",
+    "typecheck": "tsc --noEmit && tsc --noEmit -p tests/tsconfig.json",
+    "release": "npm publish"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^4.0.15",
+    "eslint": "^9.37.0",
+    "eslint-config-love": "^133.0.0",
+    "rollup": "^4.53.3",
+    "rollup-plugin-dts": "^6.3.0",
+    "tsdown": "^0.17.0",
+    "typescript": "~5.9.3",
+    "vitest": "^4.0.15"
+  },
+  "dependencies": {
+    "stable-hash": "^0.0.6"
+  }
+}
