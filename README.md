@@ -270,8 +270,11 @@ When component types aren't known at compile time:
 import { RuntimeView } from 'entt-js'
 
 const runtimeView = new RuntimeView()
-runtimeView.iterate(registry.getStorage(Position))
-runtimeView.iterate(registry.getStorage(Velocity))
+
+const UnknownType1 = /* ? */
+const UnknownType2 = /* ? */
+runtimeView.iterate(registry.getStorage(UnknownType1))
+runtimeView.iterate(registry.getStorage(UnknownType2))
 
 for (const entity of runtimeView) {
   // Process entities

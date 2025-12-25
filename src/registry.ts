@@ -570,3 +570,4 @@ export const basicRegistryTemplate = defineTemplate<BasicRegistryTemplate>(funct
 })
 
 export const Registry = /*#__PURE__*/ (() => basicRegistryTemplate.instantiate(Entity))()
+export type Registry = InstanceType<typeof Registry>

@@ -361,5 +361,10 @@ export const basicContinuousLoaderTemplate = defineTemplate<BasicContinuousLoade
 })
 
 export const Snapshot = /*#__PURE__*/ (() => basicSnapshotTemplate.instantiate(Registry))()
+export type Snapshot = InstanceType<typeof Snapshot>
+
 export const SnapshotLoader = /*#__PURE__*/ (() => basicSnapshotLoaderTemplate.instantiate(Registry))()
+export type SnapshotLoader = InstanceType<typeof SnapshotLoader>
+
 export const ContinuousLoader = /*#__PURE__*/ (() => basicContinuousLoaderTemplate.instantiate(Registry))()
+export type ContinuousLoader = InstanceType<typeof ContinuousLoader>

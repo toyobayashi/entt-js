@@ -213,3 +213,4 @@ export const basicRuntimeViewTemplate = defineTemplate<BasicRuntimeViewTemplate>
 })
 
 export const RuntimeView = /*#__PURE__*/ (() => basicRuntimeViewTemplate.instantiate(SparseSet))()
+export type RuntimeView = InstanceType<typeof RuntimeView>

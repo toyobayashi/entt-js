@@ -790,3 +790,4 @@ export const basicSparseSetTemplate = defineTemplate<BasicSparseSetTemplate>(fun
 })
 
 export const SparseSet = /*#__PURE__*/ (() => basicSparseSetTemplate.instantiate(Entity))()
+export type SparseSet = InstanceType<typeof SparseSet>
