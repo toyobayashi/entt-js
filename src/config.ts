@@ -112,7 +112,7 @@ export function isEmptyClass (Type: Function): boolean {
       return false
     }
     if (str.startsWith('class')) {
-      const match = str.match(/^class\s+\w*(\s+extends\s+[\w$]+)?\s*{/)
+      const match = str.match(/^class(\s+\w*)?(\s+extends\s+[\w$]+)?\s*{/)
       const classBody = getBlockBody(str, match)
       if (!classBody) throw new Error('impossible')
       if (/^\{\s*(\r?\n)*\s*\}$/.test(classBody)) {
